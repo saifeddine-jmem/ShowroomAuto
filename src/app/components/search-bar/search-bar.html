@@ -1,0 +1,43 @@
+<div class=" mx-auto my-4">
+    
+    <div class="flex justify-center w-full mx-auto max-w-lg items-center rounded-lg">
+     <p class="gap-x-2 px-3.5 text-blue-600 mx-auto">Brand</p>   
+    
+      <button type="button"  (click)="searchAutoList(brand.value)" class=" py-2.5 w-[20%] size-11.5 shrink-0 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-s-md border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
+        <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.3-4.3"></path>
+        </svg>
+      </button>
+      <input type="text" id="" name="" #brand class="w-[80%] size-11.5 rounded-e-md border border-gray-300 bg-white px-3.5 py-2 text-sm text-gray-700 placeholder-gray-400 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500" placeholder="Search..." />
+    </div>
+    <div class="mt-4 text-center text-sm text-gray-500">
+      <p>Type the brand of the car you want to search and click the search button.</p>
+    </div>
+    <div class=" flex w-[90vw] mx-auto justify-center flex-wrap place-content-around gap-4" *ngIf="filtredAutos.length > 0 ">
+    @for (auto of filtredAutos; track auto.id) {
+        
+        <div class=" max-w-md min-w-[20vw] shadow-lg bg-cyan-200 shadow-cyan-500/50  mx-auto my-4 bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden">
+        <img class="w-full h-48 object-cover" [src]="'/images/'+auto.photo" [alt]="auto.brand + ' ' + auto.model">
+        <div class="p-4">
+          <h2 class="text-xl font-semibold mb-2">{{ auto.brand }} {{ auto.model }}</h2>
+          <div class="flex justify-between items-center">
+            
+            <div class="mr-5">
+            <p class="text-gray-900 font-bold mb-2">Price: {{ auto.price|currency:"EUR"}}</p>
+            <p class="text-gray-600">Power: {{ auto.power }} HP</p>
+            <p class="text-gray-600">Availability: {{ auto.availability }}</p>
+            </div>
+            <div>
+                <button (click)="showDetails(auto)" class="text-white text-[25px] rounded bg-blue-600 flex justify-center items-center p-10 h-20">view</button>
+            </div>
+            
+          </div>
+          
+        </div>
+
+      </div>
+        
+    }
+    </div>
+  </div>
