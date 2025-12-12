@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { Auto } from '../../interfaces/auto';
 import { NgForOf, NgIf,CurrencyPipe } from '@angular/common';
 
@@ -11,10 +11,14 @@ import { NgForOf, NgIf,CurrencyPipe } from '@angular/common';
   templateUrl: './search-bar.html',
   styleUrl: './search-bar.css',
 })
-export class SearchBar {
+export class SearchBar implements OnInit {
   @Input() autos:Auto[]=[];
    filtredAutos:Auto[]=[];
    @Output() onSelectAuto = new EventEmitter<Auto>();
+
+  ngOnInit() {
+    this.filtredAutos = this.autos;
+  }
   
   searchAutoList(brand:any) {
     

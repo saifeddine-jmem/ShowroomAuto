@@ -1,33 +1,91 @@
-<div>
+<div class="app-container">
   <app-head-bar/>
   <app-search-bar [autos]="autoList" (onSelectAuto)="selectAuto($event)"/>
-  <div class=" w-[100vw] my-4">
+  
   @if (selectedAuto!=null) {
-    <div class=" justify-between px-[5vw] flex h-[60vh] items-center mx-auto my-4 bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden">
-      
-      <div class="">
-      <div class="p-4  w-[40vw]">
-        <h2 class="text-xl font-semibold mb-2">{{ selectedAuto.brand }} {{ selectedAuto.model }}</h2>
-        <p class="text-gray-700 mb-4">{{ selectedAuto.description }}</p>
-        <div class="flex justify-between items-center">
-          
-          <div class="mr-5">
-          <p class="text-gray-900 font-bold mb-2">Price: {{ selectedAuto.price|currency:"EUR"}}</p>
-          <p class="text-gray-600">Power: {{ selectedAuto.power }} HP</p>
-          <p class="text-gray-600">Availability: {{ selectedAuto.availability }}</p>
+    <div class="detail-modal-overlay" (click)="closeDetail()">
+      <div class="detail-modal" (click)="$event.stopPropagation()">
+        <button class="close-button" (click)="closeDetail()">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+        
+        <div class="detail-grid">
+          <div class="detail-image-section">
+            <div class="detail-image-wrapper">
+              <img 
+                class="detail-image" 
+                [src]="'/images/'+selectedAuto.photo" 
+                [alt]="selectedAuto.brand + ' ' + selectedAuto.model"
+              >
+              <div class="image-gradient"></div>
+            </div>
           </div>
           
+          <div class="detail-content">
+            <div class="detail-header">
+              <div>
+                <span class="detail-badge">Premium Selection</span>
+                <h2 class="detail-title">{{ selectedAuto.brand }}</h2>
+                <p class="detail-model">{{ selectedAuto.model }}</p>
+              </div>
+              <div class="detail-price-box">
+                <span class="price-label">Starting at</span>
+                <span class="detail-price">{{ selectedAuto.price|currency:"EUR" }}</span>
+              </div>
+            </div>
+            
+            <p class="detail-description">{{ selectedAuto.description }}</p>
+            
+            <div class="detail-specs-grid">
+              <div class="spec-card">
+                <div class="spec-icon-wrapper">
+                  <svg class="spec-svg" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M13 2.05v2.02c3.95.49 7 3.85 7 7.93 0 4.08-3.05 7.44-7 7.93v2.02c5.05-.5 9-4.76 9-9.95 0-5.19-3.95-9.45-9-9.95zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7c3.87 0 7 3.13 7 7s-3.13 7-7 7z"/>
+                  </svg>
+                </div>
+                <div>
+                  <p class="spec-label">Power</p>
+                  <p class="spec-value">{{ selectedAuto.power }} HP</p>
+                </div>
+              </div>
+              
+              <div class="spec-card">
+                <div class="spec-icon-wrapper">
+                  <svg class="spec-svg" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                  </svg>
+                </div>
+                <div>
+                  <p class="spec-label">Availability</p>
+                  <p class="spec-value">{{ selectedAuto.availability }} Units</p>
+                </div>
+              </div>
+            </div>
+            
+            <div class="detail-actions">
+              <button class="action-button primary">
+                <span>Reserve Now</span>
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                </svg>
+              </button>
+              <button class="action-button secondary">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                </svg>
+              </button>
+              <button class="action-button secondary">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
+                </svg>
+              </button>
+            </div>
+          </div>
         </div>
-        
       </div>
-      </div>
-      <div>
-        <img class="w-full  h-48 object-cover" [src]="'/images/'+selectedAuto.photo" [alt]="selectedAuto.brand + ' ' + selectedAuto.model">
-      </div>
-
     </div>
   }
-  </div>
-  
 </div>
 

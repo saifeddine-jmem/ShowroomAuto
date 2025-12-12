@@ -1,43 +1,92 @@
-<div class=" mx-auto my-4">
+<div class="search-container">
     
-    <div class="flex justify-center w-full mx-auto max-w-lg items-center rounded-lg">
-     <p class="gap-x-2 px-3.5 text-blue-600 mx-auto">Brand</p>   
-    
-      <button type="button"  (click)="searchAutoList(brand.value)" class=" py-2.5 w-[20%] size-11.5 shrink-0 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-s-md border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
-        <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Hero Section -->
+    <div class="hero-section">
+      <h2 class="hero-title">Find Your Dream Car</h2>
+      <p class="hero-subtitle">Explore our premium collection of luxury vehicles</p>
+    </div>
+
+    <!-- Modern Search Bar -->
+    <div class="search-wrapper">
+      <div class="search-box">
+        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="11" cy="11" r="8"></circle>
           <path d="m21 21-4.3-4.3"></path>
         </svg>
-      </button>
-      <input type="text" id="" name="" #brand class="w-[80%] size-11.5 rounded-e-md border border-gray-300 bg-white px-3.5 py-2 text-sm text-gray-700 placeholder-gray-400 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500" placeholder="Search..." />
+        <input 
+          type="text" 
+          #brand 
+          class="search-input" 
+          placeholder="Enter brand name (e.g., BMW, Mercedes, Audi...)" 
+          (keyup.enter)="searchAutoList(brand.value)"
+        />
+        <button 
+          type="button" 
+          (click)="searchAutoList(brand.value)" 
+          class="search-button">
+          Search
+        </button>
+      </div>
     </div>
-    <div class="mt-4 text-center text-sm text-gray-500">
-      <p>Type the brand of the car you want to search and click the search button.</p>
-    </div>
-    <div class=" flex w-[90vw] mx-auto justify-center flex-wrap place-content-around gap-4" *ngIf="filtredAutos.length > 0 ">
-    @for (auto of filtredAutos; track auto.id) {
-        
-        <div class=" max-w-md min-w-[20vw] shadow-lg bg-cyan-200 shadow-cyan-500/50  mx-auto my-4 bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden">
-        <img class="w-full h-48 object-cover" [src]="'/images/'+auto.photo" [alt]="auto.brand + ' ' + auto.model">
-        <div class="p-4">
-          <h2 class="text-xl font-semibold mb-2">{{ auto.brand }} {{ auto.model }}</h2>
-          <div class="flex justify-between items-center">
-            
-            <div class="mr-5">
-            <p class="text-gray-900 font-bold mb-2">Price: {{ auto.price|currency:"EUR"}}</p>
-            <p class="text-gray-600">Power: {{ auto.power }} HP</p>
-            <p class="text-gray-600">Availability: {{ auto.availability }}</p>
+
+    <!-- Results Grid -->
+    <div class="results-grid" *ngIf="filtredAutos.length > 0">
+      @for (auto of filtredAutos; track auto.id) {
+        <div class="car-card" (click)="showDetails(auto)">
+          <div class="card-image-wrapper">
+            <img 
+              class="card-image" 
+              [src]="'/images/'+auto.photo" 
+              [alt]="auto.brand + ' ' + auto.model"
+              loading="lazy"
+            >
+            <div class="card-overlay">
+              <span class="view-details">View Details</span>
             </div>
-            <div>
-                <button (click)="showDetails(auto)" class="text-white text-[25px] rounded bg-blue-600 flex justify-center items-center p-10 h-20">view</button>
-            </div>
-            
           </div>
           
+          <div class="card-content">
+            <div class="card-header">
+              <h3 class="card-title">{{ auto.brand }}</h3>
+              <span class="card-badge">{{ auto.availability }} Available</span>
+            </div>
+            
+            <p class="card-model">{{ auto.model }}</p>
+            
+            <div class="card-specs">
+              <div class="spec-item">
+                <svg class="spec-icon" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M13 2.05v2.02c3.95.49 7 3.85 7 7.93 0 4.08-3.05 7.44-7 7.93v2.02c5.05-.5 9-4.76 9-9.95 0-5.19-3.95-9.45-9-9.95zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7c3.87 0 7 3.13 7 7s-3.13 7-7 7z"/>
+                </svg>
+                <span>{{ auto.power }} HP</span>
+              </div>
+              <div class="spec-item">
+                <svg class="spec-icon" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/>
+                </svg>
+                <span class="card-price">{{ auto.price|currency:"EUR" }}</span>
+              </div>
+            </div>
+            
+            <button class="card-button">
+              <span>Explore Now</span>
+              <svg class="button-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+              </svg>
+            </button>
+          </div>
         </div>
-
-      </div>
-        
-    }
+      }
     </div>
-  </div>
+
+    <!-- Empty State -->
+    <div class="empty-state" *ngIf="filtredAutos.length === 0">
+      <div class="empty-icon">
+        <svg fill="currentColor" viewBox="0 0 24 24">
+          <path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/>
+        </svg>
+      </div>
+      <h3 class="empty-title">Start Your Search</h3>
+      <p class="empty-text">Enter a brand name above to discover amazing vehicles</p>
+    </div>
+</div>

@@ -21,6 +21,10 @@ export class App {
     this.selectedAuto=auto;
     console.log(this.selectedAuto);
   }
+
+  closeDetail(){
+    this.selectedAuto=null;
+  }
   autoList:Auto[]=[{     
       id:1,
       brand: "Mercedes Benz",
