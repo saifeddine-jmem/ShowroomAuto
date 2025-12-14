@@ -27,6 +27,32 @@
           Search
         </button>
       </div>
+
+      <!-- Filters and Sorts -->
+      <div class="filters-row">
+        <div class="filter-item">
+          <label class="filter-label">Category</label>
+          <select class="filter-select" (change)="onCategoryChange($any($event.target).value)">
+            <option value="">All</option>
+            <option value="Sedan">Sedan</option>
+            <option value="SUV">SUV</option>
+            <option value="Hatchback">Hatchback</option>
+            <option value="Electric SUV">Electric SUV</option>
+            <option value="Hybrid SUV">Hybrid SUV</option>
+            <option value="Off-road">Off-road</option>
+          </select>
+        </div>
+        <div class="filter-item">
+          <label class="filter-label">Sort</label>
+          <select class="filter-select" (change)="onSortChange($any($event.target).value)">
+            <option value="">Default</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+            <option value="power-asc">Power: Low to High</option>
+            <option value="power-desc">Power: High to Low</option>
+          </select>
+        </div>
+      </div>
     </div>
 
     <!-- Results Grid -->
@@ -52,6 +78,7 @@
             </div>
             
             <p class="card-model">{{ auto.model }}</p>
+            <p class="card-category">{{ auto.category }}</p>
             
             <div class="card-specs">
               <div class="spec-item">

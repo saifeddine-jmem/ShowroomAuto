@@ -2,6 +2,7 @@ export interface Auto {
       id:number,
       brand: string,
       model: string,
+      category: string,
       price: number,
       power: number,
       photo: string,

@@ -43,7 +43,9 @@
 /* Search Wrapper */
 .search-wrapper {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
   margin-bottom: 60px;
   animation: slideUp 0.8s ease-out 0.2s both;
 }
@@ -250,8 +252,29 @@
 .card-model {
   color: rgba(255, 255, 255, 0.7);
   font-size: 14px;
-  margin-bottom: 20px;
+  margin-bottom: 8px;
   font-weight: 500;
+}
+
+.card-category {
+  display: inline-block;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%);
+  border: 1px solid rgba(102, 126, 234, 0.4);
+  color: rgba(255, 255, 255, 0.9);
+  padding: 6px 14px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.car-card:hover .card-category {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.3) 0%, rgba(118, 75, 162, 0.3) 100%);
+  border-color: rgba(102, 126, 234, 0.6);
+  transform: scale(1.05);
 }
 
 .card-specs {
@@ -392,3 +415,85 @@
 .car-card:nth-child(4) { animation-delay: 0.4s; }
 .car-card:nth-child(5) { animation-delay: 0.5s; }
 .car-card:nth-child(6) { animation-delay: 0.6s; }
+
+/* Filters Row */
+.filters-row {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-end;
+  width: 100%;
+  max-width: 700px;
+  animation: fadeIn 0.8s ease-out 0.4s both;
+}
+
+.filter-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 200px;
+  flex: 1;
+}
+
+.filter-label {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 14px;
+  font-weight: 600;
+  padding-left: 4px;
+  letter-spacing: 0.02em;
+}
+
+.filter-select {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  color: white;
+  padding: 14px 20px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  outline: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.6)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  padding-right: 48px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.filter-select:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.filter-select:focus {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(102, 126, 234, 0.6);
+  box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
+}
+
+.filter-select option {
+  background: #2a2a3e;
+  color: white;
+  padding: 12px;
+  font-weight: 500;
+}
+
+/* Responsive filters */
+@media (max-width: 768px) {
+  .filters-row {
+    flex-direction: column;
+    max-width: 100%;
+    padding: 0 20px;
+  }
+
+  .filter-item {
+    width: 100%;
+    min-width: unset;
+  }
+}
