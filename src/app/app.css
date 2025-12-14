@@ -306,6 +306,31 @@
   height: 24px;
 }
 
+.wishlist-detail-btn {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.wishlist-detail-btn.in-wishlist {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%) !important;
+  border-color: rgba(245, 87, 108, 0.6);
+  color: white;
+}
+
+.wishlist-detail-btn.in-wishlist:hover {
+  background: linear-gradient(135deg, #f5576c 0%, #f093fb 100%) !important;
+  box-shadow: 0 8px 24px rgba(245, 87, 108, 0.4);
+}
+
+.wishlist-detail-btn:active {
+  animation: heartBounce 0.3s ease;
+}
+
+@keyframes heartBounce {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
 /* Responsive Design */
 @media (max-width: 968px) {
   .detail-grid {

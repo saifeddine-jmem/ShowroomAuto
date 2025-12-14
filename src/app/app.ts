@@ -1,10 +1,11 @@
-import { Component, Input, signal } from '@angular/core';
+import { Component, Input, signal, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeadBar } from "./components/head-bar/head-bar";
 import { SearchBar } from "./components/search-bar/search-bar";
 import { Wishlist } from "./components/wishlist/wishlist";
 import { Auto } from './interfaces/auto';
 import { CurrencyPipe } from '@angular/common';
+import { WishlistService } from './services/wishlist.service';
 
 
 @Component({
@@ -14,6 +15,7 @@ import { CurrencyPipe } from '@angular/common';
   styleUrl: './app.css'
 })
 export class App {
+  wishlistService = inject(WishlistService);
   protected readonly title = signal('showroom');
   @Input() filtredAutos:Auto[]=[];
   selectedAuto:Auto|null=null;
@@ -34,6 +36,20 @@ export class App {
 
   closeWishlist(): void {
     this.showWishlist = false;
+  }
+
+  toggleDetailWishlist(): void {
+    if (this.selectedAuto) {
+      if (this.wishlistService.isInWishlist(this.selectedAuto.id)) {
+        this.wishlistService.removeFromWishlist(this.selectedAuto.id);
+      } else {
+        this.wishlistService.addToWishlist(this.selectedAuto);
+      }
+    }
+  }
+
+  isInWishlist(autoId: number): boolean {
+    return this.wishlistService.isInWishlist(autoId);
   }
 
   autoList:Auto[]=[{     
