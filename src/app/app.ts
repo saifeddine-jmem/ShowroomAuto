@@ -2,13 +2,14 @@ import { Component, Input, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeadBar } from "./components/head-bar/head-bar";
 import { SearchBar } from "./components/search-bar/search-bar";
+import { Wishlist } from "./components/wishlist/wishlist";
 import { Auto } from './interfaces/auto';
 import { CurrencyPipe } from '@angular/common';
 
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HeadBar, SearchBar,CurrencyPipe],
+  imports: [RouterOutlet, HeadBar, SearchBar, Wishlist, CurrencyPipe],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
@@ -16,6 +17,7 @@ export class App {
   protected readonly title = signal('showroom');
   @Input() filtredAutos:Auto[]=[];
   selectedAuto:Auto|null=null;
+  showWishlist = false;
 
   selectAuto(auto:Auto){
     this.selectedAuto=auto;
@@ -25,6 +27,15 @@ export class App {
   closeDetail(){
     this.selectedAuto=null;
   }
+
+  toggleWishlist(): void {
+    this.showWishlist = !this.showWishlist;
+  }
+
+  closeWishlist(): void {
+    this.showWishlist = false;
+  }
+
   autoList:Auto[]=[{     
       id:1,
       brand: "Mercedes Benz",

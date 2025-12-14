@@ -1,6 +1,10 @@
 <div class="app-container">
-  <app-head-bar/>
+  <app-head-bar (onToggleWishlist)="toggleWishlist()"/>
   <app-search-bar [autos]="autoList" (onSelectAuto)="selectAuto($event)"/>
+
+  @if (showWishlist) {
+    <app-wishlist (onClose)="closeWishlist()" (onSelectAuto)="selectAuto($event)"/>
+  }
   
   @if (selectedAuto!=null) {
     <div class="detail-modal-overlay" (click)="closeDetail()">

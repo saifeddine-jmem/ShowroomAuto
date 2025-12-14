@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit, inject } from '@angular/core';
 import { Auto } from '../../interfaces/auto';
 import { NgForOf, NgIf,CurrencyPipe } from '@angular/common';
+import { WishlistService } from '../../services/wishlist.service';
 
 
 
@@ -12,6 +13,7 @@ import { NgForOf, NgIf,CurrencyPipe } from '@angular/common';
   styleUrl: './search-bar.css',
 })
 export class SearchBar implements OnInit {
+  wishlistService = inject(WishlistService);
   @Input() autos:Auto[]=[];
    filtredAutos:Auto[]=[];
    @Output() onSelectAuto = new EventEmitter<Auto>();
@@ -75,6 +77,19 @@ export class SearchBar implements OnInit {
   showDetails(auto:Auto
   ){
     this.onSelectAuto.emit(auto);
+  }
+
+  toggleWishlist(event: Event, auto: Auto): void {
+    event.stopPropagation();
+    if (this.wishlistService.isInWishlist(auto.id)) {
+      this.wishlistService.removeFromWishlist(auto.id);
+    } else {
+      this.wishlistService.addToWishlist(auto);
+    }
+  }
+
+  isInWishlist(autoId: number): boolean {
+    return this.wishlistService.isInWishlist(autoId);
   }
   
 }

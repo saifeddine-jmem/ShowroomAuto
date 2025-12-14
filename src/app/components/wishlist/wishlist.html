@@ -1,0 +1,71 @@
+<div class="wishlist-overlay" (click)="close()">
+  <div class="wishlist-panel" (click)="$event.stopPropagation()">
+    <div class="wishlist-header">
+      <div class="header-content">
+        <div class="header-icon">
+          <svg fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </div>
+        <div>
+          <h2 class="wishlist-title">My Wishlist</h2>
+          <p class="wishlist-count">{{ wishlistService.count() }} {{ wishlistService.count() === 1 ? 'car' : 'cars' }}</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button *ngIf="wishlistService.count() > 0" class="clear-all-btn" (click)="clearAll()">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+          </svg>
+          Clear All
+        </button>
+        <button class="close-btn" (click)="close()">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="wishlist-content" *ngIf="wishlistService.count() > 0">
+      <div class="wishlist-grid">
+        @for (auto of wishlistService.items(); track auto.id) {
+          <div class="wishlist-card" (click)="exploreAuto(auto)">
+            <div class="wishlist-card-image">
+              <img [src]="'/images/'+auto.photo" [alt]="auto.brand + ' ' + auto.model">
+              <button class="remove-btn" (click)="removeFromWishlist(auto.id, $event)">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+              </button>
+            </div>
+            <div class="wishlist-card-content">
+              <h3 class="wishlist-card-brand">{{ auto.brand }}</h3>
+              <p class="wishlist-card-model">{{ auto.model }}</p>
+              <div class="wishlist-card-category">{{ auto.category }}</div>
+              <div class="wishlist-card-footer">
+                <span class="wishlist-card-price">{{ auto.price | currency:"EUR" }}</span>
+                <div class="wishlist-card-power">
+                  <svg fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M13 2.05v2.02c3.95.49 7 3.85 7 7.93 0 4.08-3.05 7.44-7 7.93v2.02c5.05-.5 9-4.76 9-9.95 0-5.19-3.95-9.45-9-9.95zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7c3.87 0 7 3.13 7 7s-3.13 7-7 7z"/>
+                  </svg>
+                  {{ auto.power }} HP
+                </div>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="empty-wishlist" *ngIf="wishlistService.count() === 0">
+      <div class="empty-icon">
+        <svg fill="currentColor" viewBox="0 0 24 24">
+          <path d="M16.5 3c-1.74 0-3.41.81-4.5 2.09C10.91 3.81 9.24 3 7.5 3 4.42 3 2 5.42 2 8.5c0 3.78 3.4 6.86 8.55 11.54L12 21.35l1.45-1.32C18.6 15.36 22 12.28 22 8.5 22 5.42 19.58 3 16.5 3zm-4.4 15.55l-.1.1-.1-.1C7.14 14.24 4 11.39 4 8.5 4 6.5 5.5 5 7.5 5c1.54 0 3.04.99 3.57 2.36h1.87C13.46 5.99 14.96 5 16.5 5c2 0 3.5 1.5 3.5 3.5 0 2.89-3.14 5.74-7.9 10.05z"/>
+        </svg>
+      </div>
+      <h3 class="empty-title">Your wishlist is empty</h3>
+      <p class="empty-text">Start adding your favorite cars to build your dream collection</p>
+    </div>
+  </div>
+</div>
